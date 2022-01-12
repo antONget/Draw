@@ -8,9 +8,9 @@ x_0 = 0
 y_0 = 0
 z_0 = 10
 
-beta = math.radians(0) # угол скольжения
-teta_x = math.radians(13) # угол захвата камеры по оси Х
-teta_y = math.radians(10) # угол захвата камеры по оси y
+beta = math.radians(0)  # угол скольжения
+teta_x = math.radians(13)  # угол захвата камеры по оси Х
+teta_y = math.radians(10)  # угол захвата камеры по оси y
 
 # начальные значения при alfa=0
 def position_camera_is_alfa_zero(beta):
@@ -104,9 +104,11 @@ for beta in range(0, 61, 8):
         draw_quadrangle(x_A, x_B, x_C, x_D, y_A, y_B, y_C, y_D, color='red')
         draw_quadrangle(x_A, x_B, x_C, x_D, y_A, y_B, y_C, y_D, color='black')
 
-img = plt.imread('хр1.jpg')
-axs.imshow(img, extent=[-10, 15, -13, 20]) # 80, 40
-plt.axis([-25, 25, -25, 25])
+img = plt.imread('xp1.jpg')
+shift_ver = -15
+shift_gor = -49
+axs.imshow(img, extent=[0 + shift_gor, 80 + shift_gor, 0 + shift_ver, 40 + shift_ver])  # 80, 40
+# plt.axis([-25, 25, -25, 25])
 
 plt.grid(True)
 plt.show()
