@@ -37,7 +37,7 @@ def draw_quadrangle(x_A, x_B, x_C, x_D, y_A, y_B, y_C, y_D, color='black', linew
     y = np.array(y)
     plt.plot(x, y, color=color, alpha=0.7,
         linewidth=linewidth, solid_capstyle='round', zorder=2)
-    # plt.pause(0.5)
+    plt.pause(0.05)
 
 
 def rotate(origin, point, angle):
@@ -84,7 +84,7 @@ x_A_0, x_B_0, x_C_0, x_D_0, y_A_0, y_B_0, y_C_0, y_D_0 = position_camera_is_alfa
 # угол поворота камеры на различных beta для обеспечения требуемого перекрвтия
 # steps_alfa = 60, 29, 25, 20, 16, 14, 13, 12
 # количество поворотов на различных beta для обеспечения требуемого перекрытия и равенства крайних положений камеры
-num_steps_alfa = 4, 6, 8, 9, 12, 13, 14, 15
+num_steps_alfa = 4, 8, 11, 14, 16, 20, 22, 26
 i = -1
 
 
@@ -94,7 +94,7 @@ for beta in range(0, 61, 8):
     beta = math.radians(beta)
     x_A_0, x_B_0, x_C_0, x_D_0, y_A_0, y_B_0, y_C_0, y_D_0 = position_camera_is_alfa_zero(beta)
     # step_alfa = int(steps_alfa[i])
-    angle_alfa = np.linspace(-85, 85, num_steps_alfa[i])
+    angle_alfa = np.linspace(-85, 175, num_steps_alfa[i])
     # print('steps_alfa ', step_alfa)
     for angle in angle_alfa:#range(-85, 95, step_alfa):
         # print('angle ', step_alfa)
