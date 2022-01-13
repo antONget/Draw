@@ -37,7 +37,7 @@ def draw_quadrangle(x_A, x_B, x_C, x_D, y_A, y_B, y_C, y_D, color='black', linew
     y = np.array(y)
     plt.plot(x, y, color=color, alpha=0.7,
         linewidth=linewidth, solid_capstyle='round', zorder=2)
-    plt.pause(0.05)
+    # plt.pause(0.01)
 
 
 def rotate(origin, point, angle):
@@ -76,7 +76,11 @@ def decart2alfa(x_A, x_B, x_C, x_D, y_A, y_B, y_C, y_D, alfa):
 # plt.axis([-25, 25, -5, 45])
 # plt.figure()
 fig, axs = plt.subplots()
-plt.plot((-10,10), (0,0), 'black')
+img = plt.imread('хр.jpg')
+shift_ver = -164
+shift_gor = -385
+axs.imshow(img, extent=[0 + shift_gor, 650 + shift_gor, 0 + shift_ver, 320 + shift_ver])  # 650, 320
+# plt.plot((-10,10), (0,0), 'black')
 
 x_A_0, x_B_0, x_C_0, x_D_0, y_A_0, y_B_0, y_C_0, y_D_0 = position_camera_is_alfa_zero(beta)
 # draw_quadrangle(x_A_0, x_B_0, x_C_0, x_D_0, y_A_0, y_B_0, y_C_0, y_D_0)
@@ -87,27 +91,33 @@ x_A_0, x_B_0, x_C_0, x_D_0, y_A_0, y_B_0, y_C_0, y_D_0 = position_camera_is_alfa
 num_steps_alfa = 4, 8, 11, 14, 16, 20, 22, 26
 i = -1
 
+beta_list_angle = np.arange(0, 80, 8)
 
-for beta in range(0, 61, 8):
+for beta_grad in beta_list_angle:
     i += 1
     # print('beta ', beta)
-    beta = math.radians(beta)
-    x_A_0, x_B_0, x_C_0, x_D_0, y_A_0, y_B_0, y_C_0, y_D_0 = position_camera_is_alfa_zero(beta)
+    beta_rad = math.radians(beta_grad)
+    x_A_0, x_B_0, x_C_0, x_D_0, y_A_0, y_B_0, y_C_0, y_D_0 = position_camera_is_alfa_zero(beta_rad)
     # step_alfa = int(steps_alfa[i])
-    angle_alfa = np.linspace(-85, 175, num_steps_alfa[i])
+    if beta_rad < math.radians(60):
+        angle_alfa = np.linspace(-85, 175, num_steps_alfa[i])
+    else:
+        angle_alfa_1 = np.linspace(-85, -50, 4)
+        angle_alfa_2 = np.linspace(60, 110, 6)
+        angle_alfa = np.hstack((angle_alfa_1, angle_alfa_2))
     # print('steps_alfa ', step_alfa)
-    for angle in angle_alfa:#range(-85, 95, step_alfa):
+    for alfa_grad in angle_alfa:#range(-85, 95, step_alfa):
         # print('angle ', step_alfa)
-        alfa = math.radians(angle)
-        x_A, y_A, x_B, y_B, x_C, y_C, x_D, y_D = decart2alfa(x_A_0, x_B_0, x_C_0, x_D_0, y_A_0, y_B_0, y_C_0, y_D_0, alfa)
-
+        alfa_rad = math.radians(alfa_grad)
+        x_A, y_A, x_B, y_B, x_C, y_C, x_D, y_D = decart2alfa(x_A_0, x_B_0, x_C_0, x_D_0, y_A_0, y_B_0, y_C_0, y_D_0, alfa_rad)
+        print('beta: ', beta_grad, 'alfa: ', alfa_grad)
         draw_quadrangle(x_A, x_B, x_C, x_D, y_A, y_B, y_C, y_D, color='red')
         draw_quadrangle(x_A, x_B, x_C, x_D, y_A, y_B, y_C, y_D, color='black')
 
-img = plt.imread('xp1.jpg')
-shift_ver = -15
-shift_gor = -49
-axs.imshow(img, extent=[0 + shift_gor, 80 + shift_gor, 0 + shift_ver, 40 + shift_ver])  # 80, 40
+# img = plt.imread('xp1.jpg')
+# shift_ver = -15
+# shift_gor = -49
+# axs.imshow(img, extent=[0 + shift_gor, 80 + shift_gor, 0 + shift_ver, 40 + shift_ver])  # 80, 40
 # plt.axis([-25, 25, -25, 25])
 
 plt.grid(True)
