@@ -91,11 +91,12 @@ x_A_0, x_B_0, x_C_0, x_D_0, y_A_0, y_B_0, y_C_0, y_D_0 = position_camera_is_alfa
 num_steps_alfa = 4, 8, 11, 14, 16, 20, 22, 26
 i = -1
 
-beta_list_angle = np.arange(0, 80, 8)
-
+beta_list_angle = np.arange(0, 60, 8)
+list_angle_grad = []
 for beta_grad in beta_list_angle:
     i += 1
     # print('beta ', beta)
+    beta_grad = np.round(beta_grad)
     beta_rad = math.radians(beta_grad)
     x_A_0, x_B_0, x_C_0, x_D_0, y_A_0, y_B_0, y_C_0, y_D_0 = position_camera_is_alfa_zero(beta_rad)
     # step_alfa = int(steps_alfa[i])
@@ -108,9 +109,11 @@ for beta_grad in beta_list_angle:
     # print('steps_alfa ', step_alfa)
     for alfa_grad in angle_alfa:#range(-85, 95, step_alfa):
         # print('angle ', step_alfa)
+        alfa_grad = np.round(alfa_grad)
         alfa_rad = math.radians(alfa_grad)
         x_A, y_A, x_B, y_B, x_C, y_C, x_D, y_D = decart2alfa(x_A_0, x_B_0, x_C_0, x_D_0, y_A_0, y_B_0, y_C_0, y_D_0, alfa_rad)
         print('beta: ', beta_grad, 'alfa: ', alfa_grad)
+        list_angle_grad.extend([beta_grad, alfa_grad])
         draw_quadrangle(x_A, x_B, x_C, x_D, y_A, y_B, y_C, y_D, color='red')
         draw_quadrangle(x_A, x_B, x_C, x_D, y_A, y_B, y_C, y_D, color='black')
 
@@ -119,6 +122,10 @@ for beta_grad in beta_list_angle:
 # shift_gor = -49
 # axs.imshow(img, extent=[0 + shift_gor, 80 + shift_gor, 0 + shift_ver, 40 + shift_ver])  # 80, 40
 # plt.axis([-25, 25, -25, 25])
+with open('test.npy', 'w') as f:
+    for beta_alfa in list_angle_grad:
+        f.write(str(beta_alfa))
+        f.write('\n')
 
 plt.grid(True)
 plt.show()
